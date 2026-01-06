@@ -1,0 +1,97 @@
+# =============================================================================
+# Transformer Sentiment Analysis Configuration
+# =============================================================================
+
+# Model Architecture
+model:
+  name: "TransformerClassifier"
+  vocab_size: 30522                # BERT tokenizer vocabulary size
+  max_seq_length: 256              # Maximum input sequence length
+  embedding_dim: 256               # Token embedding dimension
+  num_heads: 8                     # Number of attention heads
+  num_layers: 4                    # Number of transformer encoder layers
+  feedforward_dim: 1024            # Feed-forward network hidden dimension
+  num_classes: 2                   # Binary classification (negative/positive)
+  dropout: 0.1                     # Dropout probability
+  use_pretrained_embeddings: false
+  pretrained_model: "bert-base-uncased"  # For fine-tuning option
+
+# Training Configuration
+training:
+  batch_size: 32
+  learning_rate: 0.0001            # Initial learning rate
+  weight_decay: 0.01               # L2 regularization
+  epochs: 20                       # Maximum training epochs
+  warmup_steps: 1000               # Learning rate warmup steps
+  gradient_clip_norm: 1.0          # Gradient clipping threshold
+  label_smoothing: 0.1             # Label smoothing factor
+
+# Early Stopping
+early_stopping:
+  patience: 3                      # Epochs to wait for improvement
+  min_delta: 0.001                 # Minimum change to qualify as improvement
+  monitor: "val_loss"              # Metric to monitor
+  mode: "min"                      # "min" for loss, "max" for accuracy
+
+# Optimizer Configuration
+optimizer:
+  name: "AdamW"
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+
+# Learning Rate Scheduler
+scheduler:
+  name: "cosine_with_warmup"
+  warmup_ratio: 0.1
+
+# Data Configuration
+data:
+  dataset: "imdb"                  # Options: "imdb", "sst2"
+  train_split: 0.8                 # Training data ratio
+  val_split: 0.1                   # Validation data ratio
+  test_split: 0.1                  # Test data ratio
+  max_samples: null                # Limit samples (null for full dataset)
+  num_workers: 4                   # DataLoader workers
+  pin_memory: true                 # Pin memory for faster GPU transfer
+
+# Data Augmentation
+augmentation:
+  enabled: true
+  synonym_replacement_prob: 0.1    # Probability of replacing words with synonyms
+  random_deletion_prob: 0.1        # Probability of deleting random words
+  random_swap_prob: 0.1            # Probability of swapping adjacent words
+
+# Regularization
+regularization:
+  dropout: 0.1
+  attention_dropout: 0.1
+  weight_decay: 0.01
+
+# Logging Configuration
+logging:
+  log_dir: "logs"
+  experiment_name: "transformer_sentiment"
+  log_every_n_steps: 50            # Log training metrics every N steps
+  use_tensorboard: true
+  use_wandb: false
+  wandb_project: "transformer-sentiment"
+
+# Checkpoint Configuration
+checkpoint:
+  save_dir: "checkpoints"
+  save_top_k: 3                    # Keep top K checkpoints
+  save_last: true                  # Always save last checkpoint
+  resume_from: null                # Path to resume training
+
+# Evaluation Configuration
+evaluation:
+  metrics: ["accuracy", "f1", "precision", "recall", "auc_roc"]
+  confusion_matrix: true
+  attention_visualization: true
+  num_attention_samples: 10
+
+# Reproducibility
+seed: 42
+
+# Device Configuration
+device: "cuda"                     # Options: "cuda", "cpu", "mps"
