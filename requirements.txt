@@ -1,35 +1,34 @@
-# Core dependencies
+# Core ML Framework
 torch>=2.0.0
 transformers>=4.30.0
 datasets>=2.14.0
-tokenizers>=0.13.0
 
-# Data processing
+# Data Processing & Scientific Computing
 numpy>=1.24.0
 pandas>=2.0.0
 scikit-learn>=1.3.0
+scipy>=1.10.0
 
 # Visualization
 matplotlib>=3.7.0
 seaborn>=0.12.0
 
-# Logging
+# Logging & Monitoring
 tensorboard>=2.14.0
-# wandb>=0.15.0  # Optional: uncomment for W&B support
+# wandb>=0.15.0  # Optional: uncomment for Weights & Biases
 
 # Configuration
 pyyaml>=6.0
-omegaconf>=2.3.0
 
-# Progress bars
+# Progress Bars
 tqdm>=4.65.0
 
-# Development
-pytest>=7.4.0
-black>=23.0.0
-isort>=5.12.0
-flake8>=6.1.0
-
-# Jupyter notebooks (optional)
+# Jupyter (for bonus scaling analysis)
 jupyter>=1.0.0
 ipywidgets>=8.0.0
+
+# Development & Testing (optional)
+# pytest>=7.4.0
+# black>=23.0.0
+# isort>=5.12.0
+# flake8>=6.1.0
